@@ -1,0 +1,258 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #3498db, #8e44ad); /* Gradient background */
+}
+
+#quiz-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Box shadow */
+  border: 2px solid #3498db; /* Additional border style */
+  animation: fadeInUp 1s ease-in-out, scaleIn 0.5s ease-in-out; /* Combined animations */
+}
+
+h1, h2 {
+  color: #333;
+  text-align: center;
+}
+
+#username-container {
+  margin-bottom: 20px;
+  background-color: #f8f8f8; /* Additional background color */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  transition: border-color 0.3s ease-in-out;
+}
+
+input:focus {
+  border-color: #3498db;
+}
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Additional styling for quiz questions */
+.question {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.question:hover {
+  background-color: #f5f5f5; /* Change the background color on hover */
+}
+
+.options label {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.options label:hover {
+  background-color: #e0e0e0; /* Change the background color on hover */
+}
+
+/* Styling for selected option */
+.options input:checked + label {
+  background-color: #3498db;
+  color: #fff;
+  border-color: #3498db;
+}
+
+/* Styling for correct and incorrect options */
+.options input:checked + label.correct {
+  background-color: #2ecc71; /* Green for correct answer */
+}
+
+.options input:checked + label.incorrect {
+  background-color: #e74c3c; /* Red for incorrect answer */
+}
+
+/* Additional styling for submit button */
+#submit {
+  background-color: #3498db;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 20px;
+}
+
+#submit:hover {
+  background-color: #2980b9;
+}
+
+
+#result-container {
+  margin-top: 20px;
+  text-align: center;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+  /* Additional Design */
+  background-color: #3498db; /* Background color for the entire result container */
+  color: #fff; /* Text color for the entire result container */
+}
+
+#result {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  color: #333; /* Text color for the result */
+}
+
+#recommendation {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #3498db; /* Color for the recommendation text */
+}
+
+/* Styling for Result Feedback */
+.excellent {
+  background-color: #2ecc71; /* Green */
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.very-good {
+  background-color: #3498db; /* Blue */
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.fair {
+  background-color: #f39c12; /* Yellow */
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.failed {
+  background-color: #e74c3c; /* Red */
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+#progress-container {
+  margin-top: 40px;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+#progress-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for the table */
+}
+
+#progress-table th, #progress-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+#progress-table th {
+  background-color: #3498db;
+  color: #fff;
+}
+
+#progress-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Keyframes for animation */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+      transform: scale(0);
+  }
+  to {
+      transform: scale(1);
+  }
+}
+
+/* Media for responsiveness for mobile */
+@media only screen and (max-width: 600px) {
+  /* Adjust styles for screens with a maximum width of 600px (typical mobile screens) */
+  #quiz-container {
+      margin: 10px;
+      padding: 15px;
+  }
+
+  .question,
+  .options {
+      font-size: 0.9em;
+  }
+}

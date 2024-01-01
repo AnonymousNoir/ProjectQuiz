@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History Quiz</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>History Quiz</h1>
+    <div id="username-container">
+      <label for="username">Username:</label>
+      <input type="text" id="username">
+      <button id="startButton" onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <div id="quiz" class="hidden"></div>
+    <div id="result-container" class="hidden">
+      <h2 id="result-message">Good luck on the quiz! :)</h2>
+      <div id="result"></div>
+      <div id="recommendation"></div>
+    </div>
+
+    <div id="progress-container" class="hidden">
+      <h2>Progress of Different Takers</h2>
+      <table id="progress-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Score</th>
+            <th>Total Questions</th>
+          </tr>
+        </thead>
+        <tbody id="progress-body"></tbody>
+      </table>
+    </div>
+
+    <button id="askPromptButton" onclick="promptForNewUser()">Ask Another User to Try</button>
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>
