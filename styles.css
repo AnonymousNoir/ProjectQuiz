@@ -92,7 +92,7 @@ button:hover {
   background-color: #e0e0e0; /* Change the background color on hover */
 }
 
-/* Styling for selected option */
+/* Styling for selected choices */
 .options input:checked + label {
   background-color: #3498db;
   color: #fff;
@@ -100,13 +100,17 @@ button:hover {
 }
 
 /* Styling for correct and incorrect options */
-.options input:checked + label.correct {
+.options label.correct {
   background-color: #2ecc71; /* Green for correct answer */
+  color: #fff;
 }
 
-.options input:checked + label.incorrect {
+.options label.incorrect {
   background-color: #e74c3c; /* Red for incorrect answer */
+  color: #fff;
 }
+
+
 
 /* Additional styling for submit button */
 #submit {

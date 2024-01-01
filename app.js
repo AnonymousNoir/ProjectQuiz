@@ -14,8 +14,8 @@ const questions = [
   },
   {
     question: "Ano ang pangalan ng tanyag na lider na nagtagumpay sa Laban sa Mactan noong 1521?",
-    options: ["George Washington", "Thomas Jefferson", "Abraham Lincoln", "John Adams"],
-    correctAnswer: "George Washington"
+    options: ["Datu Lapu-Lapu", "Rajah Sulayman", "Datu Kalantiaw", "Rajah Humabon"],
+    correctAnswer: "Datu Lapu-Lapu"
   },
   {
     question: "Ano ang kilalang lakandula ng Tondo na nakipag-ugnayan kay Ferdinand Magellan?",
@@ -89,34 +89,45 @@ const questions = [
   },
 ];
 
+// Get DOM elements
 const quizContainer = document.getElementById("quiz");
 const resultContainer = document.getElementById("result");
 const recommendationContainer = document.getElementById("recommendation");
-
 const askPromptButton = document.getElementById("askPromptButton");
+
+// Hiding the ask prompt button by default
 askPromptButton.style.display = "none";
 
-
+// Function to start the quiz
 function startQuiz() {
+  // Get the username input and trim the value
   const usernameInput = document.getElementById("username");
   const username = usernameInput.value.trim();
 
+  // Check if the username is empty
   if (username === "") {
-    alert("Please enter a username.");
+    alert("Please Enter your username.");
     return;
   }
 
+  // Set the current user and disable the input
   currentUser = username;
   usernameInput.disabled = true;
 
+  // Build the quiz
   buildQuiz();
+
+  // Hide the start button after clicking it
   const startButton = document.getElementById("startButton");
   startButton.style.display = "none";
 }
 
+// Function to prompt for a new user
 function promptForNewUser() {
-  const newUsername = prompt("Enter the username of the new user:");
+  // Prompt for a new username
+  const newUsername = prompt("Please Enter your username:");
 
+  // Check if the username is empty
   if (newUsername == ""){
     alert("Please enter a username.");
     return;
@@ -127,13 +138,14 @@ function promptForNewUser() {
       alert("The user is already exist. Please choose a different username.");
       return;
     }
+
     // Reset the quiz for the new user
     resetQuiz();
 
     // Set the new username
     currentUser = newUsername;
 
-    // Enable the username input for the new user
+    // Replacing the existing username in the input while disabling the inputbox as well
     const usernameInput = document.getElementById("username");
     usernameInput.value = newUsername;
     usernameInput.disabled = true;
@@ -150,7 +162,7 @@ function promptForNewUser() {
   }
 }
 
-
+// Function to reset the quiz
 function resetQuiz() {
   // Reset user-related variables
   currentUser = null;
@@ -171,7 +183,9 @@ function resetQuiz() {
   resultMessage.textContent = "Good luck on the quiz :)";
 }
 
+// Function to build the quiz
 function buildQuiz() {
+  // Loop through questions and create HTML elements
   questions.forEach((question, index) => {
     const questionDiv = document.createElement("div");
     questionDiv.classList.add("question");
@@ -180,13 +194,15 @@ function buildQuiz() {
     const optionsDiv = document.createElement("div");
     optionsDiv.classList.add("options");
     question.options.forEach((option, i) => {
-      optionsDiv.innerHTML += `<label><input type="radio" name="q${index}" value="${option}">${option}</label><br>`;
+      const inputId = `q${index}_option${i}`;
+      optionsDiv.innerHTML += `<label for="${inputId}"><input type="radio" name="q${index}" id="${inputId}" value="${option}">${option}</label><br>`;
     });
 
     quizContainer.appendChild(questionDiv);
     quizContainer.appendChild(optionsDiv);
   });
 
+  // Create and append the submit button
   const submitButton = document.createElement("button");
   submitButton.textContent = "Submit";
   submitButton.id = "submit";
@@ -194,11 +210,14 @@ function buildQuiz() {
   quizContainer.appendChild(submitButton);
 }
 
+// Function to display the quiz result
 function showResult() {
+  // Initialize variables
   let score = 0;
   const userAnswers = [];
   let allQuestionsAnswered = true;
 
+  // Loop through questions and check user answers
   questions.forEach((question, index) => {
     const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
     if (selectedOption) {
@@ -213,6 +232,7 @@ function showResult() {
     }
   });
 
+  // Check if all questions are answered
   if (!allQuestionsAnswered) {
     alert("Please answer all questions before submitting.");
     return;
@@ -221,10 +241,14 @@ function showResult() {
   // Ask for confirmation before submitting
   const confirmSubmit = confirm("Are you sure you want to submit the quiz?");
 
-  if (confirmSubmit)
-  {
+  // Proceed if the user confirms
+  if (confirmSubmit) {
+    // Update result message
     const resultMessage = document.getElementById("result-message");
     resultMessage.textContent = `Your result: ${score} out of ${questions.length}`;
+    // Show correct and wrong answers
+    showCorrectAndWrongAnswers(userAnswers);
+    // Show recommendation based on the score
     showRecommendation(score);
 
     // Hide the submit button after clicking it
@@ -239,40 +263,86 @@ function showResult() {
   }
 }
 
+// Function to show correct and wrong answers
+function showCorrectAndWrongAnswers(userAnswers) {
+  // Iterate all of the questions to check whether if it is correct or wrong
+  userAnswers.forEach((userAnswer, index) => {
+    const questionIndex = index;
+    const correctAnswer = questions[index].correctAnswer;
+
+    const selectedOption = document.querySelector(`input[name="q${questionIndex}"][value="${userAnswer.answer}"]`);
+    const selectedLabel = selectedOption.parentElement;
+
+    // Remove existing classes to avoid conflicts
+    selectedLabel.classList.remove("correct", "incorrect");
+
+    // Add correct or incorrect class based on the answer
+    if (userAnswer.answer === correctAnswer) {
+      selectedLabel.classList.add("correct");
+    } else {
+      selectedLabel.classList.add("incorrect");
+    }
+  });
+}
+
+// Function to show recommendation based on the score
 function showRecommendation(score) {
+  // Initialize recommendation variables
   let recommendation = "";
   let recommendationClass = "";
 
+  // Determine recommendation based on the score
   if (score === questions.length) {
-    recommendation = "Excellent! You are a history expert.";
+    recommendation = "Excellent! Isa kang napakagaling sa kasaysayan ng ating bansang Pilipinas! ^_^.";
     recommendationClass = "excellent";
   } else if (score >= Math.ceil(questions.length * 0.75)) {
-    recommendation = "Very Good! You have a strong grasp of history.";
+    recommendation = "Very Good! Kahit papaano may konting mali lamang sa mga nasagutan mo, keep it up! Subukan mo ulit mag review.";
     recommendationClass = "very-good";
   } else if (score >= Math.ceil(questions.length * 0.5)) {
-    recommendation = "Fair. You have some knowledge of history.";
+    recommendation = "Fair. Mukhang sakto lang ang iyong nalalaman sa kasaysayan ng Pilipinas mukhang kailangan mo yatang magbasa basa ng mga libro o artikulo patungkol sa kasaysayan ng bansang Pilipinas.";
     recommendationClass = "fair";
   } else {
-    recommendation = "Failed. You may need to brush up on your history.";
+    recommendation = "Failed. Minsan nakakalimutan talaga natin ang ating kasaysayan ngunit wag kang sumuko sapagkat ang karunungan ay natututuhan kapag gusto mong matutunan sa pamamagitan ng pagsasaliksik.";
     recommendationClass = "failed";
   }
 
+  // Display the recommendation
   recommendationContainer.innerHTML = `<p class="${recommendationClass}">${recommendation}</p>`;
 }
 
+// Function to display progress in a table
 function displayProgress() {
+  // Get the progress table body and header
   const progressBody = document.getElementById("progress-body");
+  const progressHeader = document.getElementById("progress-header");
 
-  // display the result in ascending order
+  // Display the result in ascending order
   const displayUserResults = Object.entries(userResults).sort(([, a], [, b]) => a.score - b.score);
+
+  // Update the progress table header
+  progressHeader.innerHTML = "<th>User</th><th>Score</th><th>Total Questions</th><th>Status</th>";
 
   // Update the progress table
   displayUserResults.forEach(([user, result]) => {
     const row = document.createElement("tr");
-    row.innerHTML = `<td>${user}</td><td>${result.score}</td><td>${questions.length}</td>`;
+    row.innerHTML = `<td>${user}</td><td>${result.score}</td><td>${questions.length}</td><td>${getRecommendationClass(result.score)}</td>`;
     progressBody.appendChild(row);
   });
 
-  const askPromptButton = document.getElementById("askPromptButton");
+  // Display the ask prompt button
   askPromptButton.style.display = "block";
 }
+
+// Function to get recommendation class based on the score
+function getRecommendationClass(score) {
+  if (score === questions.length) {
+    return "Excellent";
+  } else if (score >= Math.ceil(questions.length * 0.75)) {
+    return "Very Good";
+  } else if (score >= Math.ceil(questions.length * 0.5)) {
+    return "Fair";
+  } else {
+    return "Failed";
+  }
+}
+
